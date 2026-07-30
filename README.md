@@ -218,9 +218,10 @@ into it directly:
   (no API key needed), and the same optional custom-backend contract. Set
   `AI_BACKEND_URL` to the *same* Cloudflare Worker URL configured in
   jarvis-mobile's Einstellungen (see that repo's `worker/ai-proxy.js`) to
-  have both apps answer through one shared Gemini-backed brain. Toggle
-  with `AI_CHAT` in `config.env` (off by default; group chats are never
-  answered, only private messages).
+  have both apps answer through one shared Gemini-backed brain. On by
+  default (toggle with `AI_CHAT` in `config.env`); group chats are never
+  answered, only private messages. Without `AI_BACKEND_URL` set, it uses
+  the free zero-setup fallback — no configuration needed to try it.
 - `lib/features.js` — `registerBotFeatures(sock)` wires all four handlers
   up to a Baileys socket's `messages.upsert` event.
 
