@@ -26,6 +26,9 @@ module.exports = {
 
     // ===== AUTO-RESPONSE SETTINGS =====
     AUTO_REPLY: process.env.AUTO_REPLY || "false",              // Enable/disable auto-reply
+    AI_CHAT: process.env.AI_CHAT || "false", // reply to private chats with the same JARVIS AI as the jarvis-mobile app
+    AI_BACKEND_URL: process.env.AI_BACKEND_URL || "", // optional: same Cloudflare Worker as jarvis-mobile (worker/ai-proxy.js); empty = free zero-setup fallback
+    AI_MODEL: process.env.AI_MODEL || "openai", // model for the free zero-setup fallback
     AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || "false",// Reply to status updates?
     AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || "*DARKZONE-MD VIEWED YOUR STATUS 🤖*",  // Status reply message
     READ_MESSAGE: process.env.READ_MESSAGE || "false",          // Mark messages as read automatically?
@@ -55,6 +58,9 @@ module.exports = {
     ANTI_DEL_PATH: process.env.ANTI_DEL_PATH || "same", // inbox deleted messages (or 'same' to resend)
     ANTI_BOT: process.env.ANTI_BOT || "true",
     PM_BLOCKER: process.env.PM_BLOCKER || "true",
+    ANTI_SPAM: process.env.ANTI_SPAM || "true", // warn/remove group members who flood messages
+    SPAM_MAX_MESSAGES: process.env.SPAM_MAX_MESSAGES || "5", // messages allowed per SPAM_INTERVAL_SECONDS
+    SPAM_INTERVAL_SECONDS: process.env.SPAM_INTERVAL_SECONDS || "10",
 
     // ===== BOT BEHAVIOR & APPEARANCE =====
     DESCRIPTION: process.env.DESCRIPTION || "*© CREATER 𝐸𝑅𝐹𝒜𝒩 𝒜𝐻𝑀𝒜𝒟*",  // Bot description

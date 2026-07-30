@@ -192,20 +192,37 @@
 
 ---
 
-## Anti-Link & Auto-Reply (standalone module)
+## Anti-Link, Anti-Spam & Auto-Reply (standalone module)
 
-`index.js` in this repo is minified/obfuscated, so these two features are
+`index.js` in this repo is minified/obfuscated, so these features are
 implemented as plain, readable modules under `lib/` instead of being wired
 into it directly:
 
 - `lib/antilink.js` — deletes messages containing links in groups, removes
   the sender if the bot is a group admin, and warns otherwise. Group admins
   and the bot owner are exempt. Toggle with `ANTI_LINK` in `config.env`.
+- `lib/antispam.js` — warns senders in groups who flood more than
+  `SPAM_MAX_MESSAGES` messages within `SPAM_INTERVAL_SECONDS` (default: 5
+  per 10s); removes them if it keeps happening after the warning and the
+  bot is a group admin. Group admins and the bot owner are exempt. Toggle
+  with `ANTI_SPAM` in `config.env`. Activity is tracked in memory only,
+  resets on restart, and an earlier warning is itself forgotten once a
+  sender has been quiet for 5x the interval (so one old burst doesn't
+  follow someone around forever).
 - `lib/autoreply.js` — replies automatically when an incoming message
   matches a configured trigger phrase. Toggle with `AUTO_REPLY` in
   `config.env`; edit triggers/replies at runtime via `setAutoReply()`.
-- `lib/features.js` — `registerBotFeatures(sock)` wires both handlers up to
-  a Baileys socket's `messages.upsert` event.
+- `lib/aichat.js` — replies to private chats with the same JARVIS
+  personality used by the [jarvis-mobile](https://github.com/ibrahim200832/jarvis-mobile)
+  companion app: same system prompt, same zero-setup free AI fallback
+  (no API key needed), and the same optional custom-backend contract. Set
+  `AI_BACKEND_URL` to the *same* Cloudflare Worker URL configured in
+  jarvis-mobile's Einstellungen (see that repo's `worker/ai-proxy.js`) to
+  have both apps answer through one shared Gemini-backed brain. Toggle
+  with `AI_CHAT` in `config.env` (off by default; group chats are never
+  answered, only private messages).
+- `lib/features.js` — `registerBotFeatures(sock)` wires all four handlers
+  up to a Baileys socket's `messages.upsert` event.
 
 Try them with the included standalone demo, which connects to WhatsApp on
 its own (separate from `index.js`):
