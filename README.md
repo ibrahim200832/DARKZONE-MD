@@ -192,7 +192,7 @@
 
 ---
 
-## Anti-Link, Anti-Spam & Auto-Reply (standalone module)
+## Anti-Link, Anti-Spam, Auto-Reply, Group Invite & AI Chat (standalone module)
 
 `index.js` in this repo is minified/obfuscated, so these features are
 implemented as plain, readable modules under `lib/` instead of being wired
@@ -212,6 +212,16 @@ into it directly:
 - `lib/autoreply.js` — replies automatically when an incoming message
   matches a configured trigger phrase. Toggle with `AUTO_REPLY` in
   `config.env`; edit triggers/replies at runtime via `setAutoReply()`.
+- `lib/groupinvite.js` — on a brand-new private chat, proactively asks
+  whether the person wants to join the WhatsApp group; the invite link
+  (`GROUP_INVITE_LINK`) is only sent after an explicit "ja"/"yes". A
+  direct request ("kann ich der Gruppe beitreten?") sends the link
+  immediately, even after having declined earlier. Once someone is in the
+  group, every feature above already applies there — no extra setup
+  needed. The yes/no gating is plain pattern matching on purpose (not the
+  AI itself), since sending a real invite link is too consequential to
+  leave to free-text interpretation. Off by default; needs both
+  `GROUP_INVITE_FLOW=true` and `GROUP_INVITE_LINK` set in `config.env`.
 - `lib/aichat.js` — replies to private chats with the same JARVIS
   personality used by the [jarvis-mobile](https://github.com/ibrahim200832/jarvis-mobile)
   companion app: same system prompt, same zero-setup free AI fallback
@@ -222,7 +232,7 @@ into it directly:
   default (toggle with `AI_CHAT` in `config.env`); group chats are never
   answered, only private messages. Without `AI_BACKEND_URL` set, it uses
   the free zero-setup fallback — no configuration needed to try it.
-- `lib/features.js` — `registerBotFeatures(sock)` wires all four handlers
+- `lib/features.js` — `registerBotFeatures(sock)` wires all five handlers
   up to a Baileys socket's `messages.upsert` event.
 
 Try them with the included standalone demo, which connects to WhatsApp on
