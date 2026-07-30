@@ -205,8 +205,10 @@ into it directly:
   `SPAM_MAX_MESSAGES` messages within `SPAM_INTERVAL_SECONDS` (default: 5
   per 10s); removes them if it keeps happening after the warning and the
   bot is a group admin. Group admins and the bot owner are exempt. Toggle
-  with `ANTI_SPAM` in `config.env`. Activity is tracked in memory only and
-  resets on restart.
+  with `ANTI_SPAM` in `config.env`. Activity is tracked in memory only,
+  resets on restart, and an earlier warning is itself forgotten once a
+  sender has been quiet for 5x the interval (so one old burst doesn't
+  follow someone around forever).
 - `lib/autoreply.js` — replies automatically when an incoming message
   matches a configured trigger phrase. Toggle with `AUTO_REPLY` in
   `config.env`; edit triggers/replies at runtime via `setAutoReply()`.
