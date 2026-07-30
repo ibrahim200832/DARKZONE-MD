@@ -192,3 +192,28 @@
 
 ---
 
+## Anti-Link & Auto-Reply (standalone module)
+
+`index.js` in this repo is minified/obfuscated, so these two features are
+implemented as plain, readable modules under `lib/` instead of being wired
+into it directly:
+
+- `lib/antilink.js` — deletes messages containing links in groups, removes
+  the sender if the bot is a group admin, and warns otherwise. Group admins
+  and the bot owner are exempt. Toggle with `ANTI_LINK` in `config.env`.
+- `lib/autoreply.js` — replies automatically when an incoming message
+  matches a configured trigger phrase. Toggle with `AUTO_REPLY` in
+  `config.env`; edit triggers/replies at runtime via `setAutoReply()`.
+- `lib/features.js` — `registerBotFeatures(sock)` wires both handlers up to
+  a Baileys socket's `messages.upsert` event.
+
+Try them with the included standalone demo, which connects to WhatsApp on
+its own (separate from `index.js`):
+
+```bash
+node example-connect.js
+```
+
+`lib/configdb.js` is a small file-backed key/value store (`data/config.json`)
+that `config.js` depends on for its runtime-editable settings.
+
