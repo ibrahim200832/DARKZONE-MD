@@ -29,6 +29,8 @@ module.exports = {
     AI_CHAT: process.env.AI_CHAT || "true", // reply to private chats with the same JARVIS AI as the jarvis-mobile app
     AI_BACKEND_URL: process.env.AI_BACKEND_URL || "", // optional: same Cloudflare Worker as jarvis-mobile (worker/ai-proxy.js); empty = free zero-setup fallback
     AI_MODEL: process.env.AI_MODEL || "openai", // model for the free zero-setup fallback
+    GROUP_INVITE_FLOW: process.env.GROUP_INVITE_FLOW || "false", // proactively ask new private chats to join the group, only send the link after they say yes
+    GROUP_INVITE_LINK: process.env.GROUP_INVITE_LINK || "", // the group's invite link (chat.whatsapp.com/...); required for GROUP_INVITE_FLOW
     AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || "false",// Reply to status updates?
     AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || "*DARKZONE-MD VIEWED YOUR STATUS 🤖*",  // Status reply message
     READ_MESSAGE: process.env.READ_MESSAGE || "false",          // Mark messages as read automatically?
