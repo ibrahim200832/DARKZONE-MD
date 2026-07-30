@@ -192,20 +192,26 @@
 
 ---
 
-## Anti-Link & Auto-Reply (standalone module)
+## Anti-Link, Anti-Spam & Auto-Reply (standalone module)
 
-`index.js` in this repo is minified/obfuscated, so these two features are
+`index.js` in this repo is minified/obfuscated, so these features are
 implemented as plain, readable modules under `lib/` instead of being wired
 into it directly:
 
 - `lib/antilink.js` — deletes messages containing links in groups, removes
   the sender if the bot is a group admin, and warns otherwise. Group admins
   and the bot owner are exempt. Toggle with `ANTI_LINK` in `config.env`.
+- `lib/antispam.js` — warns senders in groups who flood more than
+  `SPAM_MAX_MESSAGES` messages within `SPAM_INTERVAL_SECONDS` (default: 5
+  per 10s); removes them if it keeps happening after the warning and the
+  bot is a group admin. Group admins and the bot owner are exempt. Toggle
+  with `ANTI_SPAM` in `config.env`. Activity is tracked in memory only and
+  resets on restart.
 - `lib/autoreply.js` — replies automatically when an incoming message
   matches a configured trigger phrase. Toggle with `AUTO_REPLY` in
   `config.env`; edit triggers/replies at runtime via `setAutoReply()`.
-- `lib/features.js` — `registerBotFeatures(sock)` wires both handlers up to
-  a Baileys socket's `messages.upsert` event.
+- `lib/features.js` — `registerBotFeatures(sock)` wires all three handlers
+  up to a Baileys socket's `messages.upsert` event.
 
 Try them with the included standalone demo, which connects to WhatsApp on
 its own (separate from `index.js`):

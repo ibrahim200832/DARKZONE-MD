@@ -55,6 +55,9 @@ module.exports = {
     ANTI_DEL_PATH: process.env.ANTI_DEL_PATH || "same", // inbox deleted messages (or 'same' to resend)
     ANTI_BOT: process.env.ANTI_BOT || "true",
     PM_BLOCKER: process.env.PM_BLOCKER || "true",
+    ANTI_SPAM: process.env.ANTI_SPAM || "true", // warn/remove group members who flood messages
+    SPAM_MAX_MESSAGES: process.env.SPAM_MAX_MESSAGES || "5", // messages allowed per SPAM_INTERVAL_SECONDS
+    SPAM_INTERVAL_SECONDS: process.env.SPAM_INTERVAL_SECONDS || "10",
 
     // ===== BOT BEHAVIOR & APPEARANCE =====
     DESCRIPTION: process.env.DESCRIPTION || "*© CREATER 𝐸𝑅𝐹𝒜𝒩 𝒜𝐻𝑀𝒜𝒟*",  // Bot description
