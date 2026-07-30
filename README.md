@@ -212,7 +212,16 @@ into it directly:
 - `lib/autoreply.js` — replies automatically when an incoming message
   matches a configured trigger phrase. Toggle with `AUTO_REPLY` in
   `config.env`; edit triggers/replies at runtime via `setAutoReply()`.
-- `lib/features.js` — `registerBotFeatures(sock)` wires all three handlers
+- `lib/aichat.js` — replies to private chats with the same JARVIS
+  personality used by the [jarvis-mobile](https://github.com/ibrahim200832/jarvis-mobile)
+  companion app: same system prompt, same zero-setup free AI fallback
+  (no API key needed), and the same optional custom-backend contract. Set
+  `AI_BACKEND_URL` to the *same* Cloudflare Worker URL configured in
+  jarvis-mobile's Einstellungen (see that repo's `worker/ai-proxy.js`) to
+  have both apps answer through one shared Gemini-backed brain. Toggle
+  with `AI_CHAT` in `config.env` (off by default; group chats are never
+  answered, only private messages).
+- `lib/features.js` — `registerBotFeatures(sock)` wires all four handlers
   up to a Baileys socket's `messages.upsert` event.
 
 Try them with the included standalone demo, which connects to WhatsApp on
