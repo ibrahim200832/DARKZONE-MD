@@ -31,6 +31,11 @@ module.exports = {
     AI_MODEL: process.env.AI_MODEL || "openai", // model for the free zero-setup fallback
     GROUP_INVITE_FLOW: process.env.GROUP_INVITE_FLOW || "false", // proactively ask new private chats to join the group, only send the link after they say yes
     GROUP_INVITE_LINK: process.env.GROUP_INVITE_LINK || "", // the group's invite link (chat.whatsapp.com/...); required for GROUP_INVITE_FLOW
+    UPDATE_CHECK_ENABLED: process.env.UPDATE_CHECK_ENABLED || "true", // "!update" command + background update-available notifications
+    UPDATE_REPO_OWNER: process.env.UPDATE_REPO_OWNER || "ibrahim200832", // GitHub owner to check for updates against
+    UPDATE_REPO_NAME: process.env.UPDATE_REPO_NAME || "DARKZONE-MD", // GitHub repo name to check for updates against
+    UPDATE_BRANCH: process.env.UPDATE_BRANCH || "main", // branch to compare the installed commit against
+    UPDATE_NOTIFY_INTERVAL_MINUTES: process.env.UPDATE_NOTIFY_INTERVAL_MINUTES || "60", // how often to proactively DM the owner about new updates
     AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || "false",// Reply to status updates?
     AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || "*DARKZONE-MD VIEWED YOUR STATUS 🤖*",  // Status reply message
     READ_MESSAGE: process.env.READ_MESSAGE || "false",          // Mark messages as read automatically?

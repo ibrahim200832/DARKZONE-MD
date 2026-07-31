@@ -192,7 +192,7 @@
 
 ---
 
-## Anti-Link, Anti-Spam, Auto-Reply, Group Invite & AI Chat (standalone module)
+## Anti-Link, Anti-Spam, Self-Update, Group Invite, Auto-Reply & AI Chat (standalone module)
 
 `index.js` in this repo is minified/obfuscated, so these features are
 implemented as plain, readable modules under `lib/` instead of being wired
@@ -209,9 +209,19 @@ into it directly:
   resets on restart, and an earlier warning is itself forgotten once a
   sender has been quiet for 5x the interval (so one old burst doesn't
   follow someone around forever).
-- `lib/autoreply.js` — replies automatically when an incoming message
-  matches a configured trigger phrase. Toggle with `AUTO_REPLY` in
-  `config.env`; edit triggers/replies at runtime via `setAutoReply()`.
+- `lib/selfupdate.js` — "!update" (or "`<PREFIX>`update", e.g. ".update")
+  checks the bot's installed git commit against the latest one on GitHub
+  (`UPDATE_REPO_OWNER`/`UPDATE_REPO_NAME`/`UPDATE_BRANCH`), replies with a
+  changelog if one's available, then `git pull`s and restarts the process
+  to apply it (relies on something like pm2/Docker/Heroku to bring the
+  process back up after it exits — the same setup this repo's README
+  already recommends for running the bot at all). **Anyone who can message
+  the bot can trigger the actual install, not just the owner** — that's a
+  deliberate choice; restrict it yourself (e.g. gate on `OWNER_NUMBER`) if
+  that's not what you want for your deployment. A background check also
+  proactively DMs the owner (`UPDATE_NOTIFY_INTERVAL_MINUTES`, default
+  hourly) when a new commit appears, without installing it automatically.
+  Toggle both with `UPDATE_CHECK_ENABLED` in `config.env` (on by default).
 - `lib/groupinvite.js` — on a brand-new private chat, proactively asks
   whether the person wants to join the WhatsApp group; the invite link
   (`GROUP_INVITE_LINK`) is only sent after an explicit "ja"/"yes". A
@@ -232,8 +242,9 @@ into it directly:
   default (toggle with `AI_CHAT` in `config.env`); group chats are never
   answered, only private messages. Without `AI_BACKEND_URL` set, it uses
   the free zero-setup fallback — no configuration needed to try it.
-- `lib/features.js` — `registerBotFeatures(sock)` wires all five handlers
-  up to a Baileys socket's `messages.upsert` event.
+- `lib/features.js` — `registerBotFeatures(sock)` wires all six handlers
+  up to a Baileys socket's `messages.upsert` event (and starts the
+  self-update background check).
 
 Try them with the included standalone demo, which connects to WhatsApp on
 its own (separate from `index.js`):
